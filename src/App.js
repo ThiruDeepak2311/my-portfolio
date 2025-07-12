@@ -1,10 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Github, Linkedin, Mail, ChevronDown } from 'lucide-react';
+import { Github, Linkedin, Mail, ChevronDown, Send, CheckCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const App = () => {
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const { scrollY } = useScroll();
+  const form = useRef();
+  const [formData, setFormData] = useState({
+    from_name: '',
+    from_email: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState('');
   
   const heroY = useTransform(scrollY, [0, 800], [0, -100]);
   // Removed heroOpacity to prevent text from fading out
@@ -16,6 +25,39 @@ const App = () => {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    emailjs.sendForm(
+      'portfolio', // Your EmailJS service ID
+      'template_1d32j2u', // Your EmailJS template ID  
+      form.current,
+      'JFp_pQe8ef06A21cE' // Your public key
+    )
+    .then((result) => {
+      console.log(result.text);
+      setSubmitStatus('success');
+      setFormData({ from_name: '', from_email: '', message: '' });
+      setTimeout(() => setSubmitStatus(''), 5000);
+    })
+    .catch((error) => {
+      console.log(error.text);
+      setSubmitStatus('error');
+      setTimeout(() => setSubmitStatus(''), 5000);
+    })
+    .finally(() => {
+      setIsSubmitting(false);
+    });
+  };
 
   const projects = [
     {
@@ -557,9 +599,9 @@ const App = () => {
         transition={{ duration: 1 }}
         viewport={{ once: true }}
       >
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-6xl mx-auto">
           <motion.h2 
-            className="text-5xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
+            className="text-5xl font-bold text-center mb-8 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -569,7 +611,7 @@ const App = () => {
           </motion.h2>
           
           <motion.p 
-            className="text-xl text-gray-300 mb-8"
+            className="text-xl text-gray-300 mb-8 text-center"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -579,7 +621,7 @@ const App = () => {
           </motion.p>
 
           <motion.p 
-            className="text-lg text-gray-400 mb-12"
+            className="text-lg text-gray-400 mb-12 text-center"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -587,56 +629,190 @@ const App = () => {
           >
             Open to collaborations, research opportunities, and innovative AI projects.
           </motion.p>
-          
-          <motion.div 
-            className="flex flex-col items-center space-y-8"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
-          >
-            {/* Email Display */}
-            <motion.a
-              href="mailto:thirudeepak2003@gmail.com"
-              className="flex items-center space-x-3 bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 px-6 py-3 rounded-full hover:bg-purple-500/10 transition-all"
-              whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(168, 85, 247, 0.3)" }}
-              whileTap={{ scale: 0.95 }}
+
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            {/* Contact Form */}
+            <motion.div
+              className="bg-gradient-to-br from-gray-900 to-gray-800 p-8 rounded-2xl border border-gray-700"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              viewport={{ once: true }}
             >
-              <Mail className="w-5 h-5 text-purple-400" />
-              <span className="text-lg text-white font-medium">thirudeepak2003@gmail.com</span>
-            </motion.a>
+              <h3 className="text-2xl font-bold mb-6 text-white">Send Me a Message</h3>
+              
+              <form ref={form} onSubmit={sendEmail} className="space-y-6">
+                <div>
+                  <label className="block text-gray-300 text-sm font-medium mb-2">
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    name="from_name"
+                    value={formData.from_name}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors"
+                    placeholder="Enter your name"
+                  />
+                </div>
 
-            {/* Social Icons */}
-            <div className="flex space-x-8">
-              {[
-                { icon: Linkedin, href: "https://www.linkedin.com/in/deepak-thirukkumaran-758598232/", label: "LinkedIn" },
-                { icon: Github, href: "https://github.com/ThiruDeepak2311", label: "GitHub" }
-              ].map((social, i) => (
-                <motion.a
-                  key={i}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-16 h-16 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center hover:shadow-2xl transition-all"
-                  whileHover={{ scale: 1.2, rotate: 360, boxShadow: "0 0 30px rgba(168, 85, 247, 0.6)" }}
-                  whileTap={{ scale: 0.9 }}
+                <div>
+                  <label className="block text-gray-300 text-sm font-medium mb-2">
+                    Your Email
+                  </label>
+                  <input
+                    type="email"
+                    name="from_email"
+                    value={formData.from_email}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors"
+                    placeholder="Enter your email"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-gray-300 text-sm font-medium mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    required
+                    rows="5"
+                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-colors resize-none"
+                    placeholder="Write your message here..."
+                  ></textarea>
+                </div>
+
+                <motion.button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold py-3 px-6 rounded-lg hover:shadow-2xl transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                  whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
+                  whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                 >
-                  <social.icon className="w-8 h-8 text-white" />
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
+                  {isSubmitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5" />
+                      <span>Send Message</span>
+                    </>
+                  )}
+                </motion.button>
 
-          <motion.div 
-            className="mt-12 text-gray-500"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <p>📍 Chennai, India</p>
-            <p>📱 +91-9940211754</p>
-          </motion.div>
+                {/* Success/Error Messages */}
+                {submitStatus === 'success' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center space-x-2 text-green-400 bg-green-400/10 border border-green-400/20 rounded-lg p-3"
+                  >
+                    <CheckCircle className="w-5 h-5" />
+                    <span>Message sent successfully! I'll get back to you soon.</span>
+                  </motion.div>
+                )}
+
+                {submitStatus === 'error' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center space-x-2 text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg p-3"
+                  >
+                    <span>Failed to send message. Please try again or email me directly.</span>
+                  </motion.div>
+                )}
+              </form>
+            </motion.div>
+
+            {/* Contact Info */}
+            <motion.div
+              className="space-y-8"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              viewport={{ once: true }}
+            >
+              {/* Email Display */}
+              <motion.a
+                href="mailto:thirudeepak2003@gmail.com"
+                className="flex items-center space-x-3 bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-500/30 px-6 py-4 rounded-full hover:bg-purple-500/10 transition-all group"
+                whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(168, 85, 247, 0.3)" }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Mail className="w-6 h-6 text-purple-400 group-hover:text-purple-300" />
+                <span className="text-lg text-white font-medium">thirudeepak2003@gmail.com</span>
+              </motion.a>
+
+              {/* Social Icons */}
+              <div className="flex space-x-6 justify-center">
+                {[
+                  { icon: Linkedin, href: "https://www.linkedin.com/in/deepak-thirukkumaran-758598232/", label: "LinkedIn" },
+                  { icon: Github, href: "https://github.com/ThiruDeepak2311", label: "GitHub" }
+                ].map((social, i) => (
+                  <motion.a
+                    key={i}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-16 h-16 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center hover:shadow-2xl transition-all"
+                    whileHover={{ scale: 1.2, rotate: 360, boxShadow: "0 0 30px rgba(168, 85, 247, 0.6)" }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <social.icon className="w-8 h-8 text-white" />
+                  </motion.a>
+                ))}
+              </div>
+
+              {/* Current Status */}
+              <motion.div 
+                className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 border border-blue-500/30 p-6 rounded-xl text-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <div className="flex items-center justify-center space-x-3 mb-2">
+                  <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
+                  <span className="text-blue-400 font-semibold text-lg">Current Status</span>
+                </div>
+                <p className="text-white font-medium">Looking for full-time opportunities</p>
+                <p className="text-gray-300 text-sm mt-2">Ready to start immediately</p>
+              </motion.div>
+
+              {/* Contact Details */}
+              <motion.div 
+                className="space-y-4 text-gray-400"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 1.0 }}
+                viewport={{ once: true }}
+              >
+                <div className="flex items-center space-x-3">
+                  <span className="text-xl">📍</span>
+                  <span>Chennai, India</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <span className="text-xl">📱</span>
+                  <span>+91-9940211754</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <span className="text-xl">🕐</span>
+                  <span>IST (UTC +5:30)</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <span className="text-xl">⚡</span>
+                  <span>Usually responds within 24 hours</span>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
       </motion.section>
 
