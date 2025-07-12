@@ -6,8 +6,8 @@ const App = () => {
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const { scrollY } = useScroll();
   
-  const heroY = useTransform(scrollY, [0, 500], [0, -200]);
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const heroY = useTransform(scrollY, [0, 800], [0, -100]);
+  // Removed heroOpacity to prevent text from fading out
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -219,9 +219,9 @@ const App = () => {
       <motion.section 
         id="about" 
         className="min-h-screen flex items-center justify-center relative"
-        style={{ y: heroY, opacity: heroOpacity }}
+        style={{ y: heroY }}
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-pink-900/20" />
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 to-pink-900/10" />
         
         {/* Animated Background */}
         <div className="absolute inset-0">
