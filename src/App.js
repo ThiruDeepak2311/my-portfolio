@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Github, Linkedin, Mail, ChevronDown, Send, CheckCircle, ExternalLink, Code, Cpu, Pen } from 'lucide-react';
+import { Github, Linkedin, Mail, ChevronDown, Send, CheckCircle, ExternalLink, Code, Cpu, Download } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 
 const App = () => {
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-  const [activeTrack, setActiveTrack] = useState('home'); // 'home', 'ai', 'frontend'
+  const [activeTrack, setActiveTrack] = useState('home');
   const { scrollY } = useScroll();
   const form = useRef();
   const [formData, setFormData] = useState({
@@ -76,9 +76,9 @@ const App = () => {
       link: "#"
     },
     {
-      title: "Pipeline Builder: Visual AI Workflow",
-      description: "Drag-and-drop AI pipeline editor with 9 node types (LLM, API, Conditional, Merge), single BaseNode abstraction pattern, and DAG validation via Kahn's algorithm.",
-      tech: ["LLMs", "Workflow Automation", "ReactFlow", "FastAPI"],
+      title: "HITL Curriculum Generator",
+      description: "Automated curriculum generation pipeline using Ollama/Mistral with constrained prompts for structured JSON output mapped to competency standards. Async human-in-the-loop approval gate via webhooks. Dockerized for Railway.",
+      tech: ["n8n", "Ollama/Mistral", "Docker", "Webhooks"],
       github: "https://github.com/ThiruDeepak2311",
       link: "#"
     },
@@ -90,9 +90,9 @@ const App = () => {
       link: "#"
     },
     {
-      title: "AI Use Case Generator",
-      description: "Multi-agent system for AI use case generation: Research, Use Case, and Resource agents with Cohere, Serper, and HuggingFace APIs. FAISS-based RAG chat over generated PDF reports.",
-      tech: ["Agentic AI", "RAG", "LLMs", "FAISS"],
+      title: "SAP Component Extraction Tool",
+      description: "Automated extraction from unstructured SAP schedule files using regex pattern matching. Multi-file upload with cumulative quantity aggregation by custom date filters. Deployed on Railway with Excel export.",
+      tech: ["Python", "FastAPI", "Regex", "React"],
       github: "https://github.com/ThiruDeepak2311",
       link: "#"
     },
@@ -117,7 +117,7 @@ const App = () => {
         "KPI optimization framework for manufacturing: multi-tenant FastAPI backend with PostgreSQL",
         "Calculation engine for weighted scoring and cost-efficiency optimization",
         "Budget-constrained action plan generation using greedy algorithms",
-        "3 internal tools shipped"
+        "7 internal tools shipped"
       ]
     },
     {
@@ -169,7 +169,7 @@ const App = () => {
       icon: "🏏",
       color: "from-yellow-500 to-amber-500",
       highlights: [
-        "Data pipelines for talent identification and tactical decision-making in cricket",
+        "Worked with tools for Player performance prediction and talent evaluation",
         "AI-powered commentary generation (Mistral-7B quantized)",
         "Live match notifications via OneSignal API, milestone tracking"
       ]
@@ -177,8 +177,8 @@ const App = () => {
   ];
 
   const aiSkills = [
-    { category: "Core ML/AI", skills: ["Computer Vision", "NLP", "LLMs (LLaMA, Qwen, Mistral)", "Multimodal Systems", "RAG", "Agentic AI"] },
-    { category: "Frameworks", skills: ["PyTorch", "OpenCV", "PaddleOCR", "LangChain", "HuggingFace", "ONNX"] },
+    { category: "Core ML/AI", skills: ["Computer Vision", "NLP", "LLMs (LLaMA, Qwen, Mistral)", "Multimodal Systems", "RAG", "Agentic AI", "RLHF"] },
+    { category: "Frameworks & Tools", skills: ["PyTorch", "OpenCV", "PaddleOCR", "LangChain", "HuggingFace", "n8n", "Ollama"] },
     { category: "Backend", skills: ["Python", "FastAPI", "Flask", "PostgreSQL", "pgvector", "SQLAlchemy"] },
     { category: "Infrastructure", skills: ["Docker", "AWS", "Azure", "GCP", "GitHub Actions", "Railway", "Vercel"] }
   ];
@@ -187,15 +187,29 @@ const App = () => {
   const frontendProjects = [
     {
       title: "Velora Wealth",
-      description: "Official website for an AMFI-registered financial advisory firm—service pages, founder profile, and lead capture forms. Responsive design with SEO optimization and Google Analytics integration.",
+      description: "Official website for an AMFI-registered financial advisory firm—service pages, founder profile, lead capture forms, and Google Analytics integration.",
       tech: ["React", "TypeScript", "Tailwind CSS"],
       github: "https://github.com/ThiruDeepak2311",
       link: "#"
     },
     {
       title: "Art Space Foundation",
-      description: "Nonprofit organization website with Shadcn/UI components and smooth scroll animations. GA4 analytics integration, donation flow UI, program showcases, and volunteer registration pages.",
+      description: "Nonprofit organization website with Shadcn/UI components, GA4 analytics, donation flow UI, and volunteer registration pages.",
       tech: ["React 18", "TypeScript", "Framer Motion", "Shadcn/UI"],
+      github: "https://github.com/ThiruDeepak2311",
+      link: "#"
+    },
+    {
+      title: "SEO Diagnostic Tool (upGrowth)",
+      description: "Full-stack website SEO analyzer—15 automated checks across 4 categories, weighted scoring with A–F grading. Freelance project for growth marketing consultancy.",
+      tech: ["React", "FastAPI", "BeautifulSoup"],
+      github: "https://github.com/ThiruDeepak2311",
+      link: "#"
+    },
+    {
+      title: "SAP Component Extraction Tool",
+      description: "Web tool for manufacturing teams to extract component data from SAP files—multi-file upload, date filtering, Excel export. Eliminated hours of manual data entry.",
+      tech: ["React", "FastAPI", "Manufacturing"],
       github: "https://github.com/ThiruDeepak2311",
       link: "#"
     },
@@ -210,30 +224,31 @@ const App = () => {
 
   const frontendExperience = [
     {
+      title: "AI Data Annotator",
+      company: "OpSquad Technologies",
+      duration: "Feb 2026 – Present",
+      location: "India",
+      icon: "🏷️",
+      color: "from-indigo-500 to-blue-500",
+      highlights: [
+        "High-accuracy data annotation for AI/ML training",
+        "Geospatial maps, images, and structured data for global clients",
+        "Polygon annotations, bounding boxes, and QA workflows",
+        "Precision-first methodology"
+      ]
+    },
+    {
       title: "Freelance Content Writer",
       company: "MyMediTour",
-      duration: "Dec 2025 – Present",
+      duration: "Oct 2025 – Feb 2026",
       location: "Remote, USA",
       icon: "✍️",
       color: "from-teal-500 to-cyan-500",
       highlights: [
-        "Website copy, service descriptions, and patient-facing content for U.S.-based medical tourism company",
+        "Website copy, service descriptions, and patient-facing content",
+        "U.S.-based medical tourism company",
         "Healthcare messaging and SEO-focused landing pages",
         "Brand voice development for international patient acquisition"
-      ]
-    },
-    {
-      title: "Frontend Developer & Social Media Manager",
-      company: "Art Space Foundation (ASF)",
-      duration: "May 2025 – Sept 2025",
-      location: "Delhi, India",
-      icon: "🎨",
-      color: "from-pink-500 to-rose-500",
-      highlights: [
-        "Official website using React 18, TypeScript, Tailwind CSS, and Framer Motion",
-        "Deployed on GoDaddy cPanel with GA4 event tracking",
-        "Social media campaigns and engagement strategy",
-        "Analytics dashboards for growth tracking and outreach optimization"
       ]
     },
     {
@@ -260,17 +275,30 @@ const App = () => {
       highlights: [
         "10+ technical blogs on AI/ML, Generative AI, and LLMs",
         "Topics: GitHub Copilot, RAG systems, LLM training, AI prompting",
-        "Simplified complex technical topics for beginner-to-advanced audiences",
-        "Driving community engagement and knowledge-sharing"
+        "Simplified complex technical topics for beginner-to-advanced audiences"
+      ]
+    },
+    {
+      title: "AI Data Trainer",
+      company: "Outlier.AI",
+      duration: "Jan 2023 – Jun 2024",
+      location: "USA",
+      icon: "🤖",
+      color: "from-pink-500 to-rose-500",
+      highlights: [
+        "RLHF tasks for LLM training",
+        "Prompt evaluation, response ranking, and quality assessment",
+        "Model fine-tuning contributions"
       ]
     }
   ];
 
   const frontendSkills = [
     { category: "Content & Writing", skills: ["Technical Writing", "Blog Writing", "SEO Copywriting", "Healthcare Content", "Educational Content"] },
+    { category: "AI & Data", skills: ["Data Annotation", "RLHF", "Prompt Engineering", "LLM Evaluation", "Geospatial Labeling"] },
     { category: "Frontend", skills: ["React.js", "TypeScript", "JavaScript (ES6+)", "HTML5", "CSS3", "Tailwind CSS", "Framer Motion", "Shadcn/UI"] },
-    { category: "Tools", skills: ["Figma", "Canva", "Google Analytics 4", "Notion", "Git", "GitHub"] },
-    { category: "Platforms", skills: ["YouTube Studio", "WordPress", "Vercel", "Railway", "cPanel"] }
+    { category: "SEO & Analytics", skills: ["Google Analytics 4", "Keyword Research", "On-Page SEO", "Technical SEO", "YouTube SEO"] },
+    { category: "Tools & Platforms", skills: ["Figma", "Canva", "Notion", "Git", "GitHub", "Vercel", "Railway", "cPanel", "YouTube Studio", "WordPress"] }
   ];
 
   // Shared Data
@@ -377,7 +405,7 @@ const App = () => {
         </div>
       </motion.nav>
 
-      {/* Hero Section - Always Visible */}
+      {/* Hero Section */}
       <motion.section 
         id="home" 
         className="min-h-screen flex items-center justify-center relative pt-20"
@@ -449,8 +477,8 @@ const App = () => {
                     AI/ML Engineer
                   </p>
                   <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed">
-                    Computer Vision • NLP • LLMs • Multimodal Systems • RAG • Agentic AI<br/>
-                    Currently building KPI optimization frameworks at ORCA Digital. Previously shipped AI solutions at CreatorOS and researched 3D object detection at IIT Hyderabad.
+                    Computer Vision • NLP • LLMs • Multimodal Systems • RAG • Agentic AI • RLHF<br/>
+                    Currently building KPI optimization frameworks at ORCA Digital (7 tools shipped). Previously shipped AI solutions at CreatorOS and researched 3D object detection at IIT Hyderabad.
                   </p>
                 </>
               )}
@@ -460,8 +488,8 @@ const App = () => {
                     Frontend Developer & Content Creator
                   </p>
                   <p className="text-base md:text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed">
-                    React • TypeScript • Tailwind CSS • Technical Writing • SEO<br/>
-                    Building client websites across healthcare, fintech, and education. Writing technical content that simplifies complex AI concepts.
+                    React • TypeScript • Tailwind CSS • Technical Writing • SEO • Data Annotation<br/>
+                    Building client websites across healthcare, fintech, and education. Currently working on AI data annotation at OpSquad Technologies.
                   </p>
                 </>
               )}
@@ -531,22 +559,22 @@ const App = () => {
                   <div className="text-gray-400 text-xs md:text-sm">AI Internships</div>
                 </motion.div>
                 <motion.div className="text-center p-4" whileHover={{ scale: 1.05 }}>
-                  <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-1">6+</div>
-                  <div className="text-gray-400 text-xs md:text-sm">ML Projects</div>
+                  <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-1">7</div>
+                  <div className="text-gray-400 text-xs md:text-sm">Tools Shipped</div>
                 </motion.div>
                 <motion.div className="text-center p-4" whileHover={{ scale: 1.05 }}>
                   <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-1">95%+</div>
                   <div className="text-gray-400 text-xs md:text-sm">Model Accuracy</div>
                 </motion.div>
                 <motion.div className="text-center p-4" whileHover={{ scale: 1.05 }}>
-                  <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-1">3</div>
-                  <div className="text-gray-400 text-xs md:text-sm">Tools Shipped</div>
+                  <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-1">90%</div>
+                  <div className="text-gray-400 text-xs md:text-sm">Voxel Reduction</div>
                 </motion.div>
               </>
             ) : (
               <>
                 <motion.div className="text-center p-4" whileHover={{ scale: 1.05 }}>
-                  <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-pink-400 to-rose-400 bg-clip-text text-transparent mb-1">4+</div>
+                  <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-pink-400 to-rose-400 bg-clip-text text-transparent mb-1">5+</div>
                   <div className="text-gray-400 text-xs md:text-sm">Client Projects</div>
                 </motion.div>
                 <motion.div className="text-center p-4" whileHover={{ scale: 1.05 }}>
@@ -563,6 +591,37 @@ const App = () => {
                 </motion.div>
               </>
             )}
+          </motion.div>
+
+          {/* Resume Download Buttons */}
+          <motion.div 
+            className="flex justify-center flex-wrap gap-4 mt-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 1.5 }}
+          >
+            <motion.a
+              href="/DeepakT_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 bg-gray-800/50 border border-purple-500/30 px-4 py-2 rounded-full text-sm text-purple-400 hover:bg-purple-500/10 transition-all"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Download className="w-4 h-4" />
+              <span>AI/ML Resume</span>
+            </motion.a>
+            <motion.a
+              href="/DeepakC_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 bg-gray-800/50 border border-pink-500/30 px-4 py-2 rounded-full text-sm text-pink-400 hover:bg-pink-500/10 transition-all"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Download className="w-4 h-4" />
+              <span>Content/Frontend Resume</span>
+            </motion.a>
           </motion.div>
         </div>
         
@@ -604,7 +663,7 @@ const App = () => {
                   Skills & Technologies
                 </motion.h2>
                 
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className={`grid gap-6 ${activeTrack === 'frontend' ? 'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5' : 'md:grid-cols-2 lg:grid-cols-4'}`}>
                   {currentSkills.map((skillGroup, i) => (
                     <motion.div
                       key={i}
@@ -648,7 +707,7 @@ const App = () => {
                   transition={{ duration: 0.8 }}
                   viewport={{ once: true }}
                 >
-                  {activeTrack === 'ai' ? 'AI/ML Projects' : 'Frontend Projects'}
+                  {activeTrack === 'ai' ? 'AI/ML Projects' : 'Frontend & Freelance Projects'}
                 </motion.h2>
                 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
