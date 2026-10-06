@@ -118,6 +118,7 @@ const KineticHeading = ({ text, className = '' }) => (
 
 const App = () => {
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [activeProfile, setActiveProfile] = useState('ai'); // 'ai' | 'frontend'
   const { scrollY } = useScroll();
   const form = useRef();
   const [formData, setFormData] = useState({
@@ -186,7 +187,7 @@ const App = () => {
       description: "Multi-agent AI system for Oil & Gas tender automation orchestrating 8 agents across qualification, BOM generation, supplier evaluation, and proposal assembly. HITL approval workflows and a Gemini-powered qualification agent for automated Go/No-Go decisions.",
       tech: ["LLMs", "Multi-Agent Systems", "Gemini", "Full-Stack"],
       github: "https://github.com/ThiruDeepak2311",
-      organization: "Nexura"
+      organization: "Stealth"
     },
     {
       title: "MedFusion: Vision-Language Framework",
@@ -387,6 +388,114 @@ const App = () => {
     }
   ];
 
+  const frontendProjects = [
+    {
+      title: "Tendering AI – Full-Stack Platform",
+      description: "End-to-end web platform for Oil & Gas bid intelligence. Built React frontend with multi-step wizard flows, real-time agent status updates, and proposal assembly UI. FastAPI backend with WebSocket-based progress streaming.",
+      tech: ["React", "FastAPI", "WebSocket", "Tailwind CSS"],
+      github: "https://github.com/ThiruDeepak2311",
+      organization: "Stealth"
+    },
+    {
+      title: "KPI Dashboard – ORCA Manufacturing",
+      description: "Real-time factory floor KPI dashboard with trend-tracking charts, multi-tenant workspace switching, and budget-constrained action plan views. Built with React, Recharts, and a FastAPI/PostgreSQL backend.",
+      tech: ["React", "Recharts", "FastAPI", "PostgreSQL"],
+      github: "https://github.com/ThiruDeepak2311",
+      organization: "ORCA Digital Lean Solutions"
+    },
+    {
+      title: "Fintech Stock Intelligence UI",
+      description: "React dashboard consuming live market data from Polygon.io. Interactive time-series charts, risk scoring cards, and driver-based investment insight panels. Deployed with Railway CI/CD.",
+      tech: ["React", "Chart.js", "Flask", "Railway"],
+      github: "https://github.com/ThiruDeepak2311",
+      organization: "Personal Project"
+    },
+    {
+      title: "SAP Component Extraction Tool",
+      description: "Clean React web app for manufacturing teams. Multi-file upload with drag-and-drop, date-filter controls, cumulative quantity aggregation table, and one-click Excel export. Shipped to production on Railway.",
+      tech: ["React", "Python", "FastAPI", "Excel Export"],
+      github: "https://github.com/ThiruDeepak2311",
+      organization: "Freelance"
+    },
+    {
+      title: "MedFusion – Medical Imaging UI",
+      description: "Interactive radiology VQA interface built in Streamlit. Drag-and-drop image upload, question input, visual attention map overlays, and report generation output panels.",
+      tech: ["Streamlit", "Python", "OpenCV", "UI/UX"],
+      github: "https://github.com/ThiruDeepak2311",
+      organization: "Personal Project"
+    },
+    {
+      title: "P&ID Detection – Streamlit App",
+      description: "Real-time computer vision deployment UI for TCS. Streamlit app allowing engineers to upload P&ID drawings and instantly view detected components with bounding boxes and OCR-extracted text.",
+      tech: ["Streamlit", "YOLOv8", "EasyOCR", "Python"],
+      github: "https://github.com/ThiruDeepak2311",
+      organization: "Tata Consultancy Services"
+    }
+  ];
+
+  const frontendExperience = [
+    {
+      title: "Contract – AI/ML Software Engineer",
+      company: "ORCA Digital Lean Solutions",
+      duration: "Nov 2025 – Present",
+      location: "Michigan, USA",
+      type: "contract",
+      icon: "🏭",
+      color: "from-blue-500 to-cyan-500",
+      highlights: [
+        "Built React KPI dashboards with Recharts for real-time factory floor monitoring",
+        "Designed multi-tenant workspace UI with role-based access and data isolation",
+        "Created interactive action plan builder with budget sliders and priority controls",
+        "Integrated FastAPI WebSocket endpoints for live trend-tracking updates"
+      ]
+    },
+    {
+      title: "AI Engineer Intern",
+      company: "CreatorOS by DRPCRD",
+      duration: "Jan 2025 - Jul 2025",
+      location: "London",
+      type: "internship",
+      icon: "💼",
+      color: "from-blue-500 to-cyan-500",
+      highlights: [
+        "Designed analytics dashboards for social media performance metrics",
+        "Built React components for OCR result visualization with image overlays",
+        "Integrated AWS S3 file pipelines with frontend upload flows",
+        "Developed pricing model UI with input forms and result summary cards"
+      ]
+    },
+    {
+      title: "Freelance Full-Stack Developer",
+      company: "Independent",
+      duration: "2024 – Present",
+      location: "Remote",
+      type: "freelance",
+      icon: "🧑‍💻",
+      color: "from-pink-500 to-purple-500",
+      highlights: [
+        "SAP component extraction tool with drag-and-drop file upload and Excel export",
+        "Delivered production-ready React apps with Railway CI/CD pipelines",
+        "Built REST API-backed UIs with FastAPI and deployed on Railway",
+        "Responsive Tailwind CSS layouts with mobile-first design approach"
+      ]
+    },
+    {
+      title: "Smart India Hackathon – Frontend Lead",
+      company: "Team of 6",
+      duration: "2023",
+      location: "National",
+      type: "competition",
+      icon: "🏆",
+      color: "from-yellow-500 to-amber-500",
+      highlights: [
+        "Led frontend development for Text-to-Video press release system",
+        "Built multilingual input UI with video preview and download flows",
+        "Streamlit-based deployment showcased live to national judges",
+        "Won 1st place — Government of India Smart India Hackathon 2023"
+      ]
+    }
+  ];
+
   return (
     <div className="bg-black text-white overflow-hidden relative">
       {/* Custom Cursor */}
@@ -403,19 +512,46 @@ const App = () => {
       />
 
       {/* Navigation */}
-      <motion.nav 
+      <motion.nav
         className="fixed top-0 w-full z-40 backdrop-blur-md bg-black/20"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <motion.div 
+          <motion.div
             className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
             whileHover={{ scale: 1.05 }}
           >
             DEEPAK.DEV
           </motion.div>
+
+          {/* Profile Switcher */}
+          <div className="flex items-center bg-gray-900/80 border border-gray-700 rounded-full p-1">
+            <motion.button
+              onClick={() => setActiveProfile('ai')}
+              className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
+                activeProfile === 'ai'
+                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+              whileTap={{ scale: 0.95 }}
+            >
+              🤖 AI Engineer
+            </motion.button>
+            <motion.button
+              onClick={() => setActiveProfile('frontend')}
+              className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
+                activeProfile === 'frontend'
+                  ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-lg'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+              whileTap={{ scale: 0.95 }}
+            >
+              🎨 Frontend Dev
+            </motion.button>
+          </div>
+
           <div className="flex space-x-8">
             {['About', 'Projects', 'Experience', 'Contact'].map((item, i) => (
               <motion.a
@@ -489,7 +625,7 @@ const App = () => {
                 'Multi-Agent Systems Builder',
                 'Computer Vision Researcher',
                 'Frontend Developer',
-                'Co-founder @ Nexura'
+                'Founder @ Stealth Startup'
               ]}
             />
           </motion.div>
@@ -589,9 +725,28 @@ const App = () => {
         </motion.div>
       </motion.section>
 
+      {/* Profile Banner */}
+      <motion.div
+        key={activeProfile}
+        className={`relative z-10 mt-24 mx-6 rounded-2xl p-4 text-center border ${
+          activeProfile === 'ai'
+            ? 'bg-purple-900/20 border-purple-500/30 text-purple-300'
+            : 'bg-cyan-900/20 border-cyan-500/30 text-cyan-300'
+        }`}
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+      >
+        <span className="text-sm font-medium">
+          {activeProfile === 'ai'
+            ? '🤖 Viewing: AI / ML Engineer profile — projects, experience & research in computer vision, LLMs, and multi-agent systems'
+            : '🎨 Viewing: Frontend Developer profile — UI projects, dashboards, and full-stack product builds'}
+        </span>
+      </motion.div>
+
       {/* Projects Section */}
-      <motion.section 
-        id="projects" 
+      <motion.section
+        id="projects"
         className="min-h-screen py-20 px-6"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -599,10 +754,10 @@ const App = () => {
         viewport={{ once: true }}
       >
         <div className="max-w-7xl mx-auto">
-          <KineticHeading text="Featured Projects" className="mb-16" />
-          
+          <KineticHeading text={activeProfile === 'ai' ? 'Featured Projects' : 'Product & UI Builds'} className="mb-16" />
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, i) => (
+            {(activeProfile === 'ai' ? projects : frontendProjects).map((project, i) => (
               <motion.div
                 key={i}
                 className="bg-gradient-to-br from-gray-900 to-gray-800 p-6 rounded-2xl border border-gray-700 hover:border-purple-500 transition-colors group"
@@ -673,9 +828,11 @@ const App = () => {
           
           {/* Experience Timeline */}
           <div className="mb-16">
-            <h3 className="text-3xl font-bold mb-8 text-center text-white">Professional Experience</h3>
+            <h3 className="text-3xl font-bold mb-8 text-center text-white">
+              {activeProfile === 'ai' ? 'Professional Experience' : 'Development Experience'}
+            </h3>
             <div className="space-y-8">
-              {experience.map((exp, i) => (
+              {(activeProfile === 'ai' ? experience : frontendExperience).map((exp, i) => (
                 <motion.div
                   key={i}
                   className="flex flex-col md:flex-row items-start md:items-center gap-6 bg-gradient-to-br from-gray-800 to-gray-900 p-6 rounded-2xl border border-gray-700"
